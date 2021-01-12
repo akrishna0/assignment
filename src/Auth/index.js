@@ -22,12 +22,12 @@ export const signin = user => {
             Accept: 'application/json',
             "Content-Type": 'application/json'
         },
-        body: JSON.stringify(user)
+        body: user
     })
     .then(response =>{
         return response.json();
     })
-    .catch(err =>console.log(err));
+    .catch(console.log("ERROR"));
 };
 
 export const authenticate = (data, next)=>{
@@ -47,5 +47,16 @@ export const signout = next =>{
         })
         .then(response => console.log("Signout successfully"))
         .catch(err => console.log(err));
+    }
+}
+
+export const isAuthenticated = ()=>{
+    if(typeof window == "undefined"){
+        return false;
+    }
+    if(localStorage.getItem("jwt")){
+        return JSON.parse(localStorage.getItem("jwt"));
+    }else{
+        return false;
     }
 }
